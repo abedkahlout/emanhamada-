@@ -117,7 +117,7 @@ function toggleMusic() {
         bgMusic.play()
             .then(() => {
                 // 🔥 هنا نقوم بجعل الموسيقى تبدأ من الثانية 5 فور نجاح التشغيل
-                bgMusic.currentTime = 102; 
+                bgMusic.currentTime = 65; 
 
                 if (musicIcon) {
                     musicIcon.classList.remove('ph-music-notes');
