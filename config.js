@@ -168,13 +168,13 @@ details: [
   images: {
     momentsPhoto: "1.jpeg",
     storyPhoto: "2.jpg",
-    qrCode: "qr.jpeg",
+    qrCode: "qr",
   },
 
 
   // ---- الموسيقى ----
   music: {
-    file: "سموا باسم الله عليها",
+    file: "33.mp3",
   },
 
 
