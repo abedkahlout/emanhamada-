@@ -166,7 +166,7 @@ details: [
 
   // ---- الصور والملفات ----
   images: {
-    momentsPhoto: "1.jpg",
+    momentsPhoto: "1.jpeg",
     storyPhoto: "2.jpg",
     qrCode: "qr.jpeg",
   },
