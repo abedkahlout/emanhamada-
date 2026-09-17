@@ -1,0 +1,1265 @@
+/* =========================================================
+   📌 دعوة زفاف — style.css (نسخة منظمة)
+   الفهرس:
+   1. الخطوط والاستيراد
+   2. المتغيرات (Variables)
+   3. إعادة الضبط الأساسية (Reset & Body)
+   4. حاويات التخطيط العامة
+   5. شاشة البداية (الستارة + زر الفتح)
+   6. القسم الرئيسي (Hero)
+   7. بطاقة الترحيب
+   8. الموقع والتقويم
+   9. العد التنازلي
+   10. عناوين الأقسام العامة
+   11. برنامج المناسبة (Timeline)
+   12. تفاصيل الحفل
+   13. رسالة الختام
+   14. ملاحظات أسفل البرنامج
+   15. لحظات الحفل ورسائل التهنئة
+   16. الفوتر
+   17. شريط التنقل السفلي
+   18. النوافذ المنبثقة (Modals) والعناصر التفاعلية
+   19. قسم "قصتنا" (المنسدل)
+   20. رمز الدخول QR
+   ========================================================= */
+
+
+/* =========================================================
+   1. الخطوط والاستيراد
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Playwrite+AU+TAS:wght@100..400&display=swap');
+
+@font-face {
+    font-family: "Shafigh";
+    src: url("./FS_Diwany.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* =========================================================
+   2. المتغيرات (Variables)
+   ========================================================= */
+:root {
+
+    /* لون النص الأساسي - بني دافئ فاتح */
+    --text-main: #7A6A5D;
+
+    /* النصوص الثانوية */
+    --text-dark: #A69783;
+
+    /* خلفية البطاقات - كريمي فاتح شفاف */
+    --card-bg: rgba(255, 251, 245, 0.95);
+
+    /* الذهبي المستخدم للعناوين والتفاصيل */
+    --gold-accent: #C9A85F;
+
+    /* حدود ناعمة */
+    --border-color: rgba(201, 168, 95, 0.25);
+
+    /* اللون الرئيسي - وردي فاتح دافئ (من الورود) */
+    --primary-color: #D9A9A0;
+
+    /* خلفية الموقع - كريمي/بيج فاتح مثل خلفية الصورة */
+    --background-main: #F5EBDD;
+
+    /* لون داكن للعناوين - بني غامق دافئ */
+    --heading-color: #5C4A3A;
+
+    /* لون النقاط والأيقونات - وردي فاتح ناعم */
+    --accent-soft: #EBC9C4;
+}
+
+/* =========================================================
+   3. إعادة الضبط الأساسية (Reset & Body)
+   ========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    outline: none !important;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--text-main);
+    overflow-x: hidden !important;
+    background-color: #f6f4ef; /* لون احتياطي في حال تأخر صورة الخلفية */
+    margin: 0;
+    padding: 0;
+}
+
+/* صورة الخلفية الثابتة (بديل متوافق مع آيفون عن background-attachment: fixed) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('back.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+
+/* =========================================================
+   4. حاويات التخطيط العامة
+   ========================================================= */
+.main-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 40px 20px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+}
+
+/* ملاحظة: علامة \ موجودة لتخطي الأقواس المربعة لتعمل ككلاس CSS صحيح */
+.max-w-\[393px\] {
+    max-width: 393px;
+}
+
+
+/* =========================================================
+   5. شاشة البداية (الستارة + زر الفتح)
+   ========================================================= */
+.curtain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* إعدادات الستارة الزجاجية المشتركة */
+.curtain-right,
+.curtain-left {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 250, 235, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 235, 150, 0.15);
+    transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+    z-index: 50;
+    will-change: transform;
+}
+
+.curtain-left {
+    left: 0;
+    transform-origin: left center;
+    border-right: 1px solid rgba(255, 235, 150, 0.35);
+    box-shadow: 5px 0 25px rgba(218, 165, 32, 0.08), inset -5px 0 15px rgba(255, 235, 150, 0.05);
+}
+
+.curtain-right {
+    right: 0;
+    transform-origin: right center;
+    border-left: 1px solid rgba(255, 235, 150, 0.35);
+    box-shadow: -5px 0 25px rgba(218, 165, 32, 0.08), inset 5px 0 15px rgba(255, 235, 150, 0.05);
+}
+
+.entry-button-wrapper {
+    position: relative;
+    z-index: 10000;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.entry-circle {
+    width: 180px;
+    height: 180px;
+    background: #fcfaf6;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), inset 0 0 15px rgba(140, 136, 119, 0.05);
+    border: 1px solid rgba(140, 136, 119, 0.2);
+    position: relative;
+}
+
+.circle-foliage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('ogson.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+}
+
+.entry-names {
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 1.4rem;
+    color: #6b695e;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.entry-open {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #a9a494;
+    border-top: 1px solid #e6e4dc;
+    padding-top: 5px;
+}
+
+/* حالة الفتح (تُضاف بواسطة main.js) */
+.curtain-opened .curtain-left {
+    transform: translateX(-100%);
+}
+
+.curtain-opened .curtain-right {
+    transform: translateX(100%) rotateY(180deg);
+}
+
+.curtain-opened .entry-button-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.5);
+}
+
+/* نص مقدمة اختياري فوق شاشة الستارة (إن استُخدم) */
+.story-intro {
+    position: absolute;
+    top: -95px;
+    width: 100%;
+    text-align: center;
+    color: #141008;
+    font-family: "Amiri", serif;
+    font-size: 1.45rem;
+    line-height: 1.8;
+    opacity: 0;
+    animation: introFade 2s ease forwards;
+    animation-delay: 0.8s;
+    text-shadow: 0 1px 8px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes introFade {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(-15px); }
+}
+
+
+/* =========================================================
+   6. القسم الرئيسي (Hero)
+   ========================================================= */
+.hero {
+    position: relative; /* لتثبيت مؤشر السحب scroll-indicator بالأسفل */
+    height: 80vh;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px 20px 120px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-subtitle {
+    font-size: 1.7rem;
+    font-weight: 500;
+    font-family: 'aref ruqaa', cursive !important;
+    margin-top: 70px;
+    margin-bottom: 50px;
+}
+
+.hero-names {
+    font-size: 4.2rem;
+    color: var(--text-dark);
+    line-height: 1;
+    font-weight: 700;
+    font-family: 'aref ruqaa', cursive !important;
+    text-align: center;
+    direction: ltr; /* لضمان صحة محاذاة الأسماء الإنجليزية إن وُجدت */
+}
+
+/* تغليف الاسم واللقب لترتيبهم عموديًا */
+.name-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.title-prefix {
+    font-size: 0.45em;
+    color: #322b3b;
+    font-family: "aref ruqaa", cursive !important;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: -5px;
+    margin-right: 2px;
+}
+
+.ampersand-wrapper {
+    display: block;
+    margin: 10px 0;
+}
+
+.ampersand {
+    font-size: 2.5rem;
+    color: var(--text-main);
+}
+
+.hero-date {
+    margin-top: 50px;
+    font-size: 1.0rem;
+}
+
+/* إشارة السحب للأسفل */
+.scroll-indicator {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #a9a494;
+    opacity: 0.8;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+.scroll-indicator .text {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    color: #1b011c;
+    letter-spacing: 1px;
+    font-weight: 500;
+    background: #ffffffb3;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.scroll-indicator .icon {
+    font-size: 1.4rem;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -8px); }
+    60% { transform: translate(-50%, -4px); }
+}
+
+
+/* =========================================================
+   7. بطاقة الترحيب
+   ========================================================= */
+.welcome-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    width: 100%;
+}
+
+.bismillah {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.welcome-text {
+    line-height: 2.2;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.welcome-names {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+
+/* =========================================================
+   8. الموقع والتقويم
+   ========================================================= */
+.location-section {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.location-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.location-address {
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.calendar-card {
+    background: #fff;
+    width: 80%;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.calendar-rings {
+    position: absolute;
+    top: -10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 40px;
+}
+
+.ring {
+    width: 25px;
+    height: 35px;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    background: transparent;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+    background: var(--text-dark);
+    color: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 25px 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.calendar-header .month {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.calendar-body {
+    padding: 20px;
+    border-radius: 0 0 20px 20px;
+}
+
+.big-day {
+    font-size: 5rem;
+    color: #a9a494;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.day-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    width: 50%;
+    margin: 0 auto 10px;
+}
+
+.save-date-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 10px 30px;
+    border-radius: 25px;
+    color: var(--text-main);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   9. العد التنازلي
+   ========================================================= */
+.countdown-section {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.countdown-section .section-title {
+    font-size: 1.1rem;
+    color: #8c8877;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.countdown-boxes {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+}
+
+.countdown-boxes .box {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 15px 5px;
+    text-align: center;
+    flex: 1;
+    max-width: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* تصميم Neumorphic ناعم */
+    box-shadow: 6px 6px 12px #e3e1da, -6px -6px 12px #ffffff;
+    transition: transform 0.2s ease-in-out;
+}
+
+.countdown-boxes .box:hover {
+    transform: translateY(-3px);
+}
+
+.countdown-boxes .num {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    line-height: 1.1;
+    margin-bottom: 5px;
+}
+
+.countdown-boxes .label {
+    display: block;
+    font-size: 0.8rem;
+    color: #8c8877;
+    font-weight: normal;
+    text-align: center;
+}
+
+
+/* =========================================================
+   10. عناوين الأقسام العامة
+   ========================================================= */
+.section-title {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   11. برنامج المناسبة (Timeline)
+   ========================================================= */
+.timeline-section {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    padding: 40px 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.timeline-section .section-title {
+    color: var(--primary-color);
+    margin-bottom: 45px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.timeline {
+    position: relative;
+    padding: 0;
+    margin: 0 auto;
+}
+
+/* الخط المركزي الفاصل */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 5px;
+    bottom: -15px;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--text-dark), transparent);
+    opacity: 0.4;
+    transform: translateX(-50%);
+}
+
+/* النقطة المتحركة مع التمرير */
+.scroll-tracker-dot {
+    background-image: url('flower-decor.png.webp');
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background-color: var(--gold-accent);
+    border-radius: 50%;
+    z-index: 3;
+    box-shadow: 0 0 15px 5px rgba(212, 170, 55, 0.6);
+    transition: top 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    display: none; /* يُظهرها main.js */
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 45px;
+    position: relative;
+    width: 100%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.timeline-item:last-child {
+    margin-bottom: 10px;
+}
+
+.timeline-item .dot {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    z-index: 2;
+    border: 3px solid #fff;
+    box-shadow: 0 0 15px rgba(116, 81, 123, 0.3);
+    transition: all 0.3s ease;
+}
+
+.timeline-item.active .dot {
+    width: 18px;
+    height: 18px;
+    background-color: var(--text-dark);
+    border: 4px solid #fff;
+    box-shadow: 0 0 20px 5px rgba(212, 175, 55, 0.4);
+    animation: pulse-gold 2s infinite;
+}
+
+@keyframes pulse-gold {
+    0%   { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.timeline-item .content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+.timeline-item .content .event-name {
+    flex: 1;
+    text-align: left;
+    padding-left: 30px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.timeline-item .content .time-container {
+    flex: 1;
+    text-align: right;
+    padding-right: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.timeline-item .content .event-time {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #666;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.timeline-item:hover {
+    transform: scale(1.02);
+}
+
+.timeline-item:hover .event-name {
+    color: var(--text-dark);
+}
+
+
+/* =========================================================
+   12. تفاصيل الحفل
+   ========================================================= */
+.details-section {
+    width: 100%;
+    padding: 10px;
+}
+
+.details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* تأثير زجاجي (Glassmorphism) */
+.detail-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 18px 25px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+}
+
+.detail-item .bullet {
+    width: 10px;
+    height: 10px;
+    background: var(--text-dark);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+
+/* =========================================================
+   13. رسالة الختام
+   ========================================================= */
+.closing-message {
+    text-align: center;
+    line-height: 2;
+    font-size: 1.1rem;
+}
+
+.closing-message .highlight {
+    margin-top: 15px;
+    color: var(--text-dark);
+}
+
+
+/* =========================================================
+   14. ملاحظات أسفل البرنامج
+   ========================================================= */
+.timeline-notes {
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.note-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.note-item:hover {
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-2px);
+}
+
+.note-icon {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.note-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.note-text strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.note-details {
+    color: #666;
+}
+
+.private-note {
+    border-right: 3px solid var(--text-dark);
+}
+
+.note-details.badge {
+    background: linear-gradient(135deg, #74517B, #9b72a4);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(116, 81, 123, 0.2);
+}
+
+
+/* =========================================================
+   15. لحظات الحفل ورسائل التهنئة
+   ========================================================= */
+.moments-section {
+    width: 100%;
+    text-align: center;
+}
+
+.video-placeholder {
+    position: relative;
+    height: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #111;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-family: serif;
+}
+
+/* صورة عامة تُستخدم بأكثر من قسم (لحظات الحفل / قصتنا) — راجعي القسم 19 للنسخة المخصصة داخل .story-section */
+.story-img {
+    width: 100%;
+    height: 200%;
+    object-fit: cover;
+}
+
+.poem-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(150, 142, 108, 0.65));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.poem-overlay p {
+    color: #fff;
+    font-family: "Amiri", serif;
+    font-size: 1.5rem;
+    line-height: 2;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.attendance-stats {
+    margin-bottom: 30px;
+}
+
+.stat-number {
+    font-size: 3rem;
+    color: var(--text-dark);
+    line-height: 1;
+    border-bottom: 1px solid var(--border-color);
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.message-bubble {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 20px;
+    color: var(--text-dark);
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   16. الفوتر
+   ========================================================= */
+.footer {
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 30px;
+    width: 100%;
+}
+
+.footer-names {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.footer-heart {
+    margin: 10px 0;
+}
+
+
+/* =========================================================
+   17. شريط التنقل السفلي
+   ========================================================= */
+.bottom-nav {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 420px;
+    background: rgba(246, 244, 238, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 5px 8px;
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #8c8877;
+    font-size: 0.65rem;
+    font-weight: 500;
+    gap: 6px;
+    flex: 1;
+}
+
+.nav-item .label {
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.nav-item:not(.center-action) .icon {
+    width: 42px;
+    height: 42px;
+    background-color: #ebe7dd;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-item:not(.center-action):hover .icon {
+    background-color: #dfdcd1;
+    transform: scale(1.05);
+}
+
+.center-action {
+    transform: translateY(-8px);
+}
+
+.gold-circle {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e3c67b, #cba44c);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.4rem;
+    box-shadow: 0 6px 20px rgba(203, 164, 76, 0.4), inset 0 2px 5px rgba(255, 255, 255, 0.4);
+}
+
+
+/* =========================================================
+   18. النوافذ المنبثقة (Modals) والعناصر التفاعلية
+   ========================================================= */
+.heart-active {
+    color: #e74c3c !important;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #fcfaf6;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    width: 80%;
+    max-width: 320px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #8c8877;
+    line-height: 1;
+}
+
+.map-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #e3c67b, #cba44c);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(203, 164, 76, 0.3);
+}
+
+
+/* =========================================================
+   19. قسم "قصتنا" (المنسدل الملكي)
+   ========================================================= */
+.story-section {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(116, 81, 123, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-header {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 340px;
+    overflow: hidden;
+}
+
+.story-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* نسخة مخصصة من .story-img (القسم 15) بخصوصية أعلى — تطبق فقط على صورة قسم "قصتنا" */
+.story-section .story-img {
+    width: 100%;
+    height: 150%;
+    object-fit: cover;
+    filter: brightness(0.77) contrast(1.1);
+    transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.story-header:hover .story-img {
+    transform: scale(1.1);
+}
+
+.story-overlay-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    color: #fcfaf6;
+    gap: 15px;
+    background: linear-gradient(to bottom, transparent, rgba(123, 112, 81, 0.4));
+}
+
+.story-overlay-title h2 {
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 2.8rem;
+    font-weight: 500;
+    margin: 0;
+    animation: story-glow-pulse 2.5s infinite ease-in-out;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes story-glow-pulse {
+    0%   { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(212, 175, 55, 0.2); transform: scale(1); }
+    50%  { text-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 40px rgba(212, 175, 55, 0.5); transform: scale(1.03); }
+    100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(212, 175, 55, 0.2); transform: scale(1); }
+}
+
+#story-arrow {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+}
+
+.story-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.story-section.open .story-content {
+    max-height: 1200px;
+    padding: 40px 25px;
+}
+
+.story-section.open #story-arrow {
+    transform: rotate(180deg) translateY(5px);
+    color: #fff;
+}
+
+.story-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-right: 25px;
+}
+
+.story-timeline::before {
+    content: '';
+    position: absolute;
+    right: 6px;
+    top: 5px;
+    bottom: 5px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary-color), var(--text-dark));
+    opacity: 0.3;
+}
+
+.story-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.story-item:hover {
+    transform: translateX(-5px);
+}
+
+.story-date {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    width: 100px;
+    text-align: right;
+    font-weight: 600;
+}
+
+.story-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    position: absolute;
+    right: 1px;
+    z-index: 2;
+    box-shadow: 0 0 10px rgba(116, 81, 123, 0.2);
+}
+
+.story-item:last-child .story-dot {
+    background-color: var(--text-dark);
+    border-color: #fff;
+    width: 14px;
+    height: 14px;
+    right: 0px;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
+.story-text {
+    font-size: 1rem;
+    color: #4A4A4A;
+    font-weight: 500;
+    margin-right: 30px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   20. رمز الدخول QR
+   ========================================================= */
+.qr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.qr-image {
+    max-width: 200px;
+    height: auto;
+    display: block;
+}
